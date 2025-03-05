@@ -47,10 +47,11 @@
                     <input type="email" name="email" value="{{ $participant->email }}" required
                            class="w-1/3 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <button type="submit"
-                            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 cursor-pointer">💾
-                        Sauver
+                            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 cursor-pointer">
+                        💾 Sauver
                     </button>
-                    <button type="button" class="cancel-edit text-gray-500 hover:underline cursor-pointer">❌ Annuler
+                    <button type="button" class="cancel-edit text-gray-500 hover:underline cursor-pointer">
+                        ❌ Annuler
                     </button>
                 </form>
 
@@ -64,7 +65,8 @@
                         <form action="/participants/{{ $participant->id }}" method="POST" class="inline delete-form">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:underline cursor-pointer">❌ Supprimer
+                            <button type="submit" class="text-red-500 hover:underline cursor-pointer">
+                                ❌ Supprimer
                             </button>
                         </form>
                     </div>

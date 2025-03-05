@@ -34,14 +34,13 @@ class ParticipantController
 
         $participant->update($request->all());
 
-
-        return back()->with('success', 'Participant mis à jour avec succès !');
+        return back()->with('success', "Participant $participant->name mis à jour avec succès !");
     }
 
     public function destroy(Participant $participant)
     {
         $participant->delete();
 
-        return back()->with('success', 'Participant supprimé avec succès !');
+        return back()->with('success', "Participant $participant->name supprimé avec succès !");
     }
 }

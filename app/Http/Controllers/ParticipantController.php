@@ -10,7 +10,7 @@ class ParticipantController
     public function index()
     {
         $participants = Participant::all();
-        return view('participants', compact('participants'));
+        return view('participants.index', compact('participants'));
     }
 
     public function store(Request $request)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Feature;
 
 use App\Mail\SecretSantaMail;
 use App\Models\Participant;

@@ -24,4 +24,24 @@ class ParticipantController
 
         return back()->with('success', 'Participant ajouté avec succès !');
     }
+
+    public function update(Request $request, Participant $participant)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:participants,email,'.$participant->id,
+        ]);
+
+        $participant->update($request->all());
+
+
+        return back()->with('success', 'Participant mis à jour avec succès !');
+    }
+
+    public function destroy(Participant $participant)
+    {
+        $participant->delete();
+
+        return back()->with('success', 'Participant supprimé avec succès !');
+    }
 }

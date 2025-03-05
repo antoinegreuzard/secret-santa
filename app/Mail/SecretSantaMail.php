@@ -10,9 +10,9 @@ class SecretSantaMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $assignedPerson;
+    public string $assignedPerson = '';
 
-    public function __construct($assignedPerson)
+    public function __construct(string $assignedPerson)
     {
         $this->assignedPerson = $assignedPerson;
     }

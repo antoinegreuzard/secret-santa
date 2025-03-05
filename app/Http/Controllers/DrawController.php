@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Mail\SecretSantaMail;
 use App\Models\Participant;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
 
 class DrawController
 {
-    public function drawNames()
+    public function drawNames(): RedirectResponse
     {
         $participants = Participant::all()->shuffle();
 
         if ($participants->count() < 2) {
-            return back()->with('error', 'Il faut au moins 2 participants pour faire un tirage.');
+            return redirect()->back()->with('error', 'Il faut au moins 2 participants pour faire un tirage.');
         }
 
         $assignments = [];
@@ -24,7 +25,7 @@ class DrawController
         foreach ($assignments as $from => $to) {
             Mail::to($from)->send(new SecretSantaMail($to));
         }
-        
-        return back()->with('success', 'Tirage effectué et emails envoyés !');
+
+        return redirect()->back()->with('success', 'Tirage effectué et emails envoyés !');
     }
 }

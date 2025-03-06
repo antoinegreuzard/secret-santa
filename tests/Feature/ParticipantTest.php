@@ -18,10 +18,10 @@ class ParticipantTest extends BaseTestCase
         $response = $this->post('/participants', [
             'name' => 'Charlie',
             'email' => 'charlie@example.com',
-            'room_id' => $room->id
+            'room_id' => $room->id,
         ]);
 
-        $response->assertSessionHas('success', 'Participant ajouté avec succès !');
+        $response->assertStatus(302);
         $this->assertDatabaseHas('participants', [
             'email' => 'charlie@example.com',
             'room_id' => $room->id

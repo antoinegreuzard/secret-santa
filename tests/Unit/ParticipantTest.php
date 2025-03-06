@@ -15,12 +15,8 @@ class ParticipantTest extends BaseTestCase
     {
         $room = Room::factory()->create();
 
-        $participant = Participant::create([
-            'name' => 'Alice',
-            'email' => 'alice@example.com',
-            'room_id' => $room->id
-        ]);
-
+        $participant = Participant::factory()->create(['room_id' => $room->id]);
+        
         $this->assertEquals($participant->room->id, $room->id);
         $this->assertInstanceOf(Room::class, $participant->room);
     }

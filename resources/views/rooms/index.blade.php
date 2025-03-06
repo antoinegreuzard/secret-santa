@@ -26,7 +26,9 @@
         @csrf
         <input type="text" name="name" placeholder="Nom de la Room" required class="p-2 border rounded-lg">
         <input type="password" name="password" placeholder="Mot de passe" required class="p-2 border rounded-lg">
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Créer</button>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer">
+            Créer
+        </button>
     </form>
 
     <ul class="bg-gray-50 p-4 rounded-lg shadow">
@@ -37,7 +39,8 @@
                     @csrf
                     <input type="password" name="password" placeholder="Mot de passe" required
                            class="p-2 border rounded-lg">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                    <button type="submit"
+                            class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 cursor-pointer">
                         Rejoindre
                     </button>
                 </form>

@@ -11,6 +11,14 @@
 <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-3xl">
     <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">🎁 Secret Santa Express 🎁</h1>
 
+    <!-- Messages de succès / erreur -->
+    @if(session('success'))
+        <div class="bg-green-100 text-green-700 p-2 rounded-lg mb-4">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="bg-red-100 text-red-700 p-2 rounded-lg mb-4">{{ session('error') }}</div>
+    @endif
+
     @if (session('room_id'))
         <div class="w-full max-w-3xl mb-4 flex justify-between items-center">
             <span class="text-lg font-bold text-gray-700">

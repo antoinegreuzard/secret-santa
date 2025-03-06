@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DrawController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ParticipantController::class, 'index']);

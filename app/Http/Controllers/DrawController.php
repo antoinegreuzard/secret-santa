@@ -11,7 +11,12 @@ class DrawController
 {
     public function drawNames(): RedirectResponse
     {
-        $participants = Participant::all()->shuffle();
+        $room_id = session('room_id');
+        if (!$room_id) {
+            return redirect()->route('rooms.index')->with('error', 'Sélectionnez une room.');
+        }
+
+        $participants = Participant::where('room_id', $room_id)->get()->shuffle();
 
         if ($participants->count() < 2) {
             return redirect()->back()->with('error', 'Il faut au moins 2 participants pour faire un tirage.');

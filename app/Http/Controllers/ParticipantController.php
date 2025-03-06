@@ -9,7 +9,12 @@ class ParticipantController
 {
     public function index()
     {
-        $participants = Participant::all();
+        $room_id = session('room_id');
+        if (!$room_id) {
+            return redirect()->route('rooms.index')->with('error', 'Sélectionnez une room.');
+        }
+
+        $participants = Participant::where('room_id', $room_id)->get();
         return view('participants.index', compact('participants'));
     }
 
@@ -20,8 +25,12 @@ class ParticipantController
             'email' => 'required|email|unique:participants,email',
         ]);
 
-        Participant::create($request->all());
-
+        Participant::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'room_id' => session('room_id'),
+        ]);
+        
         return back()->with('success', 'Participant ajouté avec succès !');
     }
 

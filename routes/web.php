@@ -16,3 +16,4 @@ Route::post('/draw', [DrawController::class, 'drawNames']);
 Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
 Route::post('/rooms', [RoomController::class, 'store']);
 Route::post('/rooms/{room}/join', [RoomController::class, 'join']);
+Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');

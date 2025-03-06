@@ -36,8 +36,24 @@ class RoomController
             return back()->with('error', 'Mot de passe incorrect.');
         }
 
-        session(['room_id' => $room->id]);
+        session([
+            'room_id' => $room->id,
+            'room_name' => $room->name,
+        ]);
 
         return redirect()->route('participants.index');
+    }
+
+    public function update(Request $request, Room $room)
+    {
+        $request->validate([
+            'new_name' => 'required|string|unique:rooms,name,'.$room->id,
+        ]);
+
+        $room->update(['name' => $request->new_name]);
+
+        session(['room_name' => $room->name]);
+
+        return back()->with('success', 'Room renommée avec succès !');
     }
 }

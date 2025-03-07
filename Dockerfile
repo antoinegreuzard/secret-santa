@@ -25,14 +25,17 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Étape 5 : Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Étape 6 : Copier uniquement les fichiers nécessaires pour composer install
-COPY composer.json composer.lock ./
-
-# Étape 7 : Installer les dépendances PHP
-RUN composer install --no-progress --prefer-dist --no-dev --optimize-autoloader
-
-# Étape 8 : Copier le reste du projet
+# Étape 6 : Copier tout le projet AVANT d’exécuter Composer
 COPY . .
 
-# Étape 9 : Exécuter `composer install` et `php artisan key:generate` au démarrage
-CMD ["sh", "-c", "composer install --no-progress --prefer-dist --optimize-autoloader && php artisan key:generate && php-fpm"]
+# Étape 7 : Vérifier que le fichier artisan existe (DEBUG)
+RUN ls -l /var/www/html
+
+# Étape 8 : Installer les dépendances PHP
+RUN composer install --no-progress --prefer-dist --optimize-autoloader
+
+# Étape 9 : Exposer le port
+EXPOSE 9000
+
+# Étape 10 : Démarrer PHP-FPM
+CMD ["php-fpm"]

@@ -23,14 +23,15 @@ class ParticipantController
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:participants,email',
+            'room_id' => 'required|exists:rooms,id'
         ]);
 
         Participant::create([
             'name' => $request->name,
             'email' => $request->email,
-            'room_id' => session('room_id'),
+            'room_id' => $request->room_id,
         ]);
-        
+
         return back()->with('success', 'Participant ajouté avec succès !');
     }
 

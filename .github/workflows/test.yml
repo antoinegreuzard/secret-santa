@@ -10,31 +10,26 @@ on:
 
 jobs:
   test:
-    needs: install  # Exécuter install.yml avant
+    needs: [ install, build ]  # Exécuter install.yml et build.yml avant
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
-      - name: Copy .env example
+      - name: 📝 Copy .env example
         run: cp .env.example .env
 
-      - name: Generate application key
+      - name: 🔑 Generate application key
         run: php artisan key:generate
 
-      - name: Run migrations and seed database
+      - name: 📜 Run migrations and seed database
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"
-        run: php artisan migrate --seed --force
+        run: php artisan migrate --seed --force --no-interaction
 
-      - name: Execute tests
+      - name: ✅ Run Tests
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"

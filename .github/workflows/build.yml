@@ -6,11 +6,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run build commands
+      - name: 📦 Install Node dependencies & Build assets
         run: |
           npm install
           npm run build

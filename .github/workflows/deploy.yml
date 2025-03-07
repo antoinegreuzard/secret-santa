@@ -9,7 +9,8 @@ on:
       - main
 
 jobs:
-  test:
+  deploy:
+    needs: [ install, build, test ]  # Exécuter tous les jobs avant
     runs-on: ubuntu-latest
 
     steps:
@@ -19,23 +20,26 @@ jobs:
       - name: 🐳 Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: 🏗️ Pull latest Docker images
+        run: docker-compose pull
+
       - name: 🏗️ Build and Start Docker Containers
         run: docker-compose up -d --build
 
       - name: 🚀 Wait for MySQL to be ready
         run: |
           echo "Waiting for MySQL..."
-          until docker exec laravel_mysql mysqladmin ping -h"127.0.0.1" --silent; do
+          until docker exec laravel_mysql mysql -uroot -proot -e "SHOW DATABASES;" > /dev/null 2>&1; do
             echo "Waiting for database..."
             sleep 2
           done
           echo "MySQL is ready!"
 
       - name: 📜 Run Laravel Migrations & Seeders
-        run: docker exec laravel_app php artisan migrate --seed
+        run: docker exec --rm laravel_app php artisan migrate --seed --force --no-interaction
 
       - name: ✅ Run Tests
-        run: docker exec laravel_app php artisan test
+        run: docker exec --rm laravel_app php artisan test
 
       - name: 📨 Test MailHog (Optional)
         run: curl -X GET http://localhost:8025/api/v2/messages | jq

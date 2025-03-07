@@ -1,7 +1,12 @@
 name: Deploy Laravel with Docker
 
 on:
-  workflow_call:  # Permet d'être appelé dans un autre workflow
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   test:

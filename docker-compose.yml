@@ -1,5 +1,5 @@
 services:
-    app:
+    secret_santa:
         build:
             context: .
             dockerfile: Dockerfile
@@ -26,7 +26,7 @@ services:
             - secret_santa_network
         command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
 
-    mysql:
+    secret_santa_mysql:
         image: mysql:8.0
         container_name: secret_santa_mysql
         restart: unless-stopped
@@ -60,7 +60,7 @@ services:
         networks:
             - secret_santa_network
 
-    mailhog:
+    secret_santa_mailhog:
         image: mailhog/mailhog
         container_name: secret_santa_mailhog
         restart: unless-stopped
@@ -70,7 +70,7 @@ services:
         networks:
             - secret_santa_network
 
-    xdebug:
+    secret_santa_xdebug:
         build:
             context: .
         container_name: secret_santa_xdebug

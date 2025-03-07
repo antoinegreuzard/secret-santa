@@ -113,13 +113,10 @@ jobs:
             sleep 2
           done
           echo "MySQL is ready!"
-
-      - name: 📜 Run Laravel Migrations & Seeders
-        run: docker exec --rm laravel_app php artisan migrate --seed --force --no-interaction
-
+          
       - name: 📜 Run Laravel Migrations & Seeders
         run: docker exec laravel_app php artisan migrate --seed --force --no-interaction
-        
+
       - name: 📨 Test MailHog (Optional)
         run: curl -X GET http://localhost:8025/api/v2/messages | jq
 

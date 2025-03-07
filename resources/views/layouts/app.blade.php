@@ -19,6 +19,17 @@
         <div class="bg-red-100 text-red-700 p-2 rounded-lg mb-4">{{ session('error') }}</div>
     @endif
 
+    <!-- Affichage des erreurs de validation -->
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-700 p-2 rounded-lg mb-4">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     @if (session('room_id'))
         <div class="w-full max-w-3xl mb-4 flex justify-between items-center">
             <span class="text-lg font-bold text-gray-700">

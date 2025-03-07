@@ -20,16 +20,16 @@ class ParticipantController
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:participants,email',
             'room_id' => 'required|exists:rooms,id'
         ]);
 
         Participant::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'room_id' => $request->room_id,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'room_id' => $validated['room_id'],
         ]);
 
         return back()->with('success', 'Participant ajouté avec succès !');

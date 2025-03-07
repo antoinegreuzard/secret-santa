@@ -15,14 +15,14 @@ class RoomController
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|unique:rooms,name',
             'password' => 'required|string|min:6',
         ]);
 
         Room::create([
-            'name' => $request->name,
-            'password' => Hash::make($request->password),
+            'name' => $validated['name'],
+            'password' => Hash::make($validated['password']),
         ]);
 
         return back()->with('success', 'Room créée avec succès !');
@@ -46,11 +46,11 @@ class RoomController
 
     public function update(Request $request, Room $room)
     {
-        $request->validate([
+        $validated = $request->validate([
             'new_name' => 'required|string|unique:rooms,name,'.$room->id,
         ]);
 
-        $room->update(['name' => $request->new_name]);
+        $room->update(['name' => $validated['new_name']]);
 
         session(['room_name' => $room->name]);
 

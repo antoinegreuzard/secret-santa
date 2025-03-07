@@ -35,7 +35,7 @@
             <span class="text-lg font-bold text-gray-700">
                 Room actuelle : {{ session('room_name') }}
             </span>
-            <a href="{{ route('rooms.index') }}"
+            <a href="{{ route('rooms.leave') }}"
                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
                 🔄 Changer de Room
             </a>

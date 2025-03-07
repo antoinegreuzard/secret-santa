@@ -13,6 +13,12 @@ class RoomController
         return view('rooms.index', ['rooms' => Room::all()]);
     }
 
+    public function leaveRoom()
+    {
+        session()->forget(['room_id', 'room_name']);
+        return redirect()->route('rooms.index')->with('success', 'Vous avez quitté la Room.');
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

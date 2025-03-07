@@ -107,18 +107,21 @@ jobs:
 
       - name: 🚀 Wait for MySQL to be ready
         run: |
-          echo "Waiting for MySQL to be ready..."
-          for i in {1..30}; do
-            docker exec secret_santa_mysql mysql -uroot -proot -e "SELECT 1;" && break
-            echo "MySQL is not ready yet, retrying in 2s..."
+          echo "Waiting for MySQL..."
+          until docker exec laravel_mysql mysql -uroot -proot -e "SHOW DATABASES;" > /dev/null 2>&1; do
+            echo "Waiting for database..."
             sleep 2
           done
+          echo "MySQL is ready!"
 
       - name: 📦 Install Composer Dependencies in Docker
         run: docker exec secret_santa composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
 
       - name: 📜 Run Laravel Migrations & Seeders
         run: docker exec secret_santa php artisan migrate --seed --force --no-interaction
+
+      - name: 📨 Test MailHog (Optional)
+        run: curl -X GET http://localhost:8025/api/v2/messages | jq
 
       - name: 🛑 Stop and Clean Up Docker
         if: always()

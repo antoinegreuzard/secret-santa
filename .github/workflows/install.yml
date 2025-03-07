@@ -27,3 +27,9 @@ jobs:
 
       - name: 📦 Install Composer dependencies
         run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: 🗂️ Upload vendor directory for next jobs
+        uses: actions/upload-artifact@v4
+        with:
+          name: vendor
+          path: vendor

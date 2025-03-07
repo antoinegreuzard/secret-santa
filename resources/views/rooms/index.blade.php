@@ -15,7 +15,7 @@
                 <input type="text" name="new_name" value="{{ session('room_name') }}" required
                        class="p-2 border rounded-lg flex-grow focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 ml-2">
+                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 ml-2 cursor-pointer">
                     💾 Sauver
                 </button>
             </div>

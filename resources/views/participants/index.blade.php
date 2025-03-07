@@ -16,7 +16,7 @@
     <form action="/draw" method="POST" class="mt-6 text-center">
         @csrf
         <button type="submit"
-                class="bg-green-500 text-white px-6 py-3 rounded-lg text-lg hover:bg-green-600">
+                class="bg-green-500 text-white px-6 py-3 cursor-pointer rounded-lg text-lg hover:bg-green-600">
             🎲 Lancer le tirage
         </button>
     </form>

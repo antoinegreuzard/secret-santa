@@ -114,9 +114,6 @@ jobs:
             sleep 2
           done
 
-      - name: 🔄 Restart Laravel container to ensure it is ready
-        run: docker-compose restart secret_santa
-
       - name: 📦 Install Composer Dependencies in Docker
         run: docker exec secret_santa composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
 

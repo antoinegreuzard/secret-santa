@@ -1,16 +1,11 @@
-name: Test Laravel with Docker
+name: Deploy Laravel with Docker
 
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
+  workflow_call:  # Permet d'être appelé dans un autre workflow
 
 jobs:
   deploy:
-    needs: [ install, build, test ]  # Exécuter tous les jobs avant
+    needs: [ install, build, test ]  # Exécute install, build et test avant
     runs-on: ubuntu-latest
 
     steps:

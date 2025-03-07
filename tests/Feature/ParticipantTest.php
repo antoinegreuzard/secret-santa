@@ -15,14 +15,16 @@ class ParticipantTest extends BaseTestCase
     {
         $room = Room::factory()->create();
 
+        $this->withSession(['room_id' => $room->id]);
 
         $response = $this->post('/participants', [
             'name' => 'Charlie',
             'email' => 'charlie@example.com',
-            'room_id' => $room->id,
         ]);
 
         $response->assertStatus(302);
+        $response->assertSessionHas('success', 'Participant ajouté avec succès !');
+
         $this->assertDatabaseHas('participants', [
             'email' => 'charlie@example.com',
             'room_id' => $room->id

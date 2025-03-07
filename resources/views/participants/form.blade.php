@@ -1,4 +1,4 @@
-<form action="/participants" method="POST" class="mb-4">
+<form action="/participants" method="POST" class="mb-4 mt-4">
     @csrf
     <div class="flex space-x-2">
         <input type="text" name="name" placeholder="Nom" required

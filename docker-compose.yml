@@ -18,7 +18,7 @@ services:
             - DB_USERNAME=laravel
             - DB_PASSWORD=laravel
         depends_on:
-            mysql:
+            secret_santa_mysql:
                 condition: service_healthy
             mailhog:
                 condition: service_started

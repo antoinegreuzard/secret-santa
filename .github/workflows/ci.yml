@@ -106,7 +106,7 @@ jobs:
         run: docker-compose up -d --build
 
       - name: 🚀 Wait for Laravel to be ready
-        run: sleep 30
+        run: sleep 120
 
       - name: 🔍 Check running containers
         run: docker ps -a

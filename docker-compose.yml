@@ -73,7 +73,6 @@ services:
     xdebug:
         build:
             context: .
-            dockerfile: Dockerfile.xdebug
         container_name: secret_santa_xdebug
         restart: unless-stopped
         volumes:

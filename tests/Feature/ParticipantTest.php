@@ -15,11 +15,15 @@ class ParticipantTest extends BaseTestCase
     {
         $room = Room::factory()->create();
 
+
         $response = $this->post('/participants', [
             'name' => 'Charlie',
             'email' => 'charlie@example.com',
             'room_id' => $room->id,
         ]);
+
+        dump($room, $response);
+
 
         $response->assertStatus(302);
         $this->assertDatabaseHas('participants', [
@@ -45,9 +49,9 @@ class ParticipantTest extends BaseTestCase
     {
         $participant = Participant::factory()->create();
 
-        $response = $this->delete("/participants/{$participant->id}");
+        $response = $this->delete("/participants/$participant->id");
 
-        $response->assertSessionHas('success', "Participant {$participant->name} supprimé avec succès !");
+        $response->assertSessionHas('success', "Participant $participant->name supprimé avec succès !");
         $this->assertDatabaseMissing('participants', ['id' => $participant->id]);
     }
 }

@@ -10,7 +10,7 @@ class Participant extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email'];
+    protected $fillable = ['name', 'email', 'room_id'];
 
     public function room(): BelongsTo
     {

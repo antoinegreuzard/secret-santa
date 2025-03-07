@@ -29,7 +29,7 @@ class RoomTest extends BaseTestCase
             'password' => Hash::make('correctpassword')
         ]);
 
-        $response = $this->post("/rooms/{$room->id}/join", [
+        $response = $this->post("/rooms/$room->id/join", [
             'password' => 'correctpassword'
         ]);
 
@@ -45,7 +45,7 @@ class RoomTest extends BaseTestCase
             'password' => Hash::make('securepass')
         ]);
 
-        $response = $this->post("/rooms/{$room->id}/join", [
+        $response = $this->post("/rooms/$room->id/join", [
             'password' => 'wrongpassword'
         ]);
 
@@ -60,7 +60,7 @@ class RoomTest extends BaseTestCase
             'password' => Hash::make('securepass')
         ]);
 
-        $response = $this->put("/rooms/{$room->id}", [
+        $response = $this->put("/rooms/$room->id", [
             'new_name' => 'New Name'
         ]);
 

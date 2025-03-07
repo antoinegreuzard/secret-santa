@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Participant;
+use App\Models\Room;
 use Illuminate\Database\Seeder;
 
 class ParticipantSeeder extends Seeder
@@ -12,9 +13,12 @@ class ParticipantSeeder extends Seeder
      */
     public function run(): void
     {
-        Participant::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        if (Room::count() === 0) {
+            Room::factory()->count(5)->create();
+        }
+
+        Participant::factory()->count(10)->create([
+            'room_id' => Room::inRandomOrder()->first()->id,
         ]);
     }
 }

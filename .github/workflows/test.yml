@@ -1,4 +1,4 @@
-name: Laravel Tests
+name: Run Tests
 
 on:
   push:
@@ -10,6 +10,7 @@ on:
 
 jobs:
   test:
+    needs: install  # Exécuter install.yml avant
     runs-on: ubuntu-latest
 
     steps:
@@ -20,10 +21,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          tools: composer:v2
-
-      - name: Install dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
       - name: Copy .env example
         run: cp .env.example .env
@@ -36,7 +33,7 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"
         run: php artisan migrate --seed --force
-        
+
       - name: Execute tests
         env:
           DB_CONNECTION: sqlite

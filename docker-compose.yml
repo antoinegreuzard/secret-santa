@@ -41,8 +41,8 @@ services:
             - secret_santa_network
         healthcheck:
             test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-            interval: 10s
-            retries: 3
+            interval: 5s
+            retries: 2
         volumes:
             - mysql_data:/var/lib/mysql
 

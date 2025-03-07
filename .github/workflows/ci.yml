@@ -105,6 +105,15 @@ jobs:
       - name: 🏗️ Build and Start Docker Containers
         run: docker-compose up -d --build
 
+      - name: 🚀 Wait for MySQL to be ready
+        run: |
+          echo "Waiting for MySQL..."
+          until docker exec laravel_mysql mysql -uroot -proot -e "SHOW DATABASES;" > /dev/null 2>&1; do
+            echo "Waiting for database..."
+            sleep 2
+          done
+          echo "MySQL is ready!"
+
       - name: 📦 Install Composer Dependencies in Docker
         run: docker exec secret_santa composer install --no-progress --prefer-dist --optimize-autoloader
 

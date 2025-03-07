@@ -4,10 +4,23 @@
           class="flex-grow flex items-center space-x-2 edit-form hidden">
         @csrf
         @method('PUT')
-        <input type="text" name="name" value="{{ $participant->name }}" required
-               class="w-1/3 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <input type="email" name="email" value="{{ $participant->email }}" required
-               class="w-1/3 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+        <div class="w-1/3">
+            <input type="text" name="name" value="{{ $participant->name }}" required
+                   class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-500 @enderror">
+            @error('name')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div class="w-1/3">
+            <input type="email" name="email" value="{{ $participant->email }}" required
+                   class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-500 @enderror">
+            @error('email')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
         <button type="submit"
                 class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 cursor-pointer">
             💾 Sauver

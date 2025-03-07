@@ -17,3 +17,4 @@ Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
 Route::post('/rooms', [RoomController::class, 'store']);
 Route::post('/rooms/{room}/join', [RoomController::class, 'join']);
 Route::put('/rooms/{room}', [RoomController::class, 'update'])->name('rooms.update');
+Route::get('/rooms/leave', [RoomController::class, 'leaveRoom'])->name('rooms.leave');

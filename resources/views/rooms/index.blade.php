@@ -5,28 +5,22 @@
 @section('content')
     <h2 class="text-xl font-bold text-center mb-4">Choisir ou créer une Room</h2>
 
-    @if (session('room_id'))
-        <form action="{{ route('rooms.update', session('room_id')) }}" method="POST"
-              class="mt-6 bg-gray-50 p-4 rounded-lg shadow">
-            @csrf
-            @method('PUT')
-            <label for="new_name" class="block text-lg font-bold mb-2">Renommer la Room :</label>
-            <div class="flex">
-                <input type="text" name="new_name" value="{{ session('room_name') }}" required
-                       class="p-2 border rounded-lg flex-grow focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button type="submit"
-                        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 ml-2">
-                    💾 Sauver
-                </button>
-            </div>
-        </form>
-    @endif
-
     <form action="/rooms" method="POST" class="mb-6">
         @csrf
-        <input type="text" name="name" placeholder="Nom de la Room" required class="p-2 border rounded-lg">
-        <input type="password" name="password" placeholder="Mot de passe" required class="p-2 border rounded-lg">
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer">
+        <input type="text" name="name" placeholder="Nom de la Room" required
+               class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-500 @enderror">
+        @error('name')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+
+        <input type="password" name="password" placeholder="Mot de passe" required
+               class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 @error('password') border-red-500 @enderror">
+        @error('password')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
+
+        <button type="submit"
+                class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer">
             Créer
         </button>
     </form>

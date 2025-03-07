@@ -25,10 +25,10 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Étape 5 : Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Étape 6 : Copier tout le projet AVANT d’exécuter Composer
+# Étape 6 : Copier tout le projet
 COPY . .
 
-# Étape 7 : Vérifier que le fichier artisan existe (DEBUG)
+# Étape 7 : Vérifier que Laravel est bien copié (DEBUG)
 RUN ls -l /var/www/html
 
 # Étape 8 : Installer les dépendances PHP
@@ -37,5 +37,5 @@ RUN composer install --no-progress --prefer-dist --optimize-autoloader
 # Étape 9 : Exposer le port
 EXPOSE 9000
 
-# Étape 10 : Démarrer PHP-FPM
-CMD ["php-fpm"]
+# Étape 10 : Lancer PHP-FPM avec un message de débogage
+CMD ["sh", "-c", "echo 'Démarrage de PHP-FPM...' && php-fpm"]

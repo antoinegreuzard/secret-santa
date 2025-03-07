@@ -11,9 +11,10 @@ services:
         ports:
             - "8005:8000"
         environment:
+            - DB_CONNECTION=mysql
             - APP_ENV=local
             - APP_DEBUG=true
-            - DB_HOST=mysql
+            - DB_HOST=secret_santa_mysql
             - DB_DATABASE=laravel
             - DB_USERNAME=laravel
             - DB_PASSWORD=laravel
@@ -24,7 +25,7 @@ services:
                 condition: service_started
         networks:
             - secret_santa_network
-        command: sh -c "php artisan serve --host=0.0.0.0 --port=8000"
+        command: sh -c "composer install --no-progress --prefer-dist --optimize-autoloader && php artisan key:generate && php-fpm"
 
     secret_santa_mysql:
         image: mysql:8.0

@@ -25,15 +25,14 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Étape 5 : Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Étape 6 : Copier les fichiers du projet
+# Étape 6 : Copier uniquement les fichiers nécessaires pour composer install
+COPY composer.json composer.lock ./
+
+# Étape 7 : Installer les dépendances PHP
+RUN composer install --no-progress --prefer-dist --no-dev --optimize-autoloader
+
+# Étape 8 : Copier le reste du projet
 COPY . .
 
-# Étape 7 : Installer les dépendances PHP et Node.js
-RUN composer install --no-progress --prefer-dist --optimize-autoloader
-RUN npm install && npm run build
-
-# Étape 8 : Exposer le port
-EXPOSE 9000
-
-# Étape 9 : Lancer PHP-FPM au démarrage du conteneur
-CMD ["php-fpm"]
+# Étape 9 : Exécuter `composer install` et `php artisan key:generate` au démarrage
+CMD ["sh", "-c", "composer install --no-progress --prefer-dist --optimize-autoloader && php artisan key:generate && php-fpm"]

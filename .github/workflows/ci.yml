@@ -105,6 +105,9 @@ jobs:
       - name: 🏗️ Build and Start Docker Containers
         run: docker-compose up -d --build
 
+      - name: 🚀 Wait for Laravel to be ready
+        run: sleep 30
+
       - name: 🔍 Check running containers
         run: docker ps -a
 
@@ -125,9 +128,6 @@ jobs:
 
       - name: 🔍 Check PHP-FPM status
         run: docker exec secret_santa ps aux | grep php-fpm
-
-      - name: 📦 Install Composer Dependencies in Docker
-        run: docker exec secret_santa composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
 
       - name: 🔑 Generate Laravel Key
         run: docker exec secret_santa php artisan key:generate

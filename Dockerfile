@@ -28,14 +28,23 @@ WORKDIR /var/www/html
 # Étape 6 : Copier tout le projet
 COPY . .
 
-# Étape 7 : Vérifier que Laravel est bien copié (DEBUG)
+# Étape 7 : Copier et configurer `.env`
+RUN cp .env.example .env
+
+# Étape 8 : Vérifier que Laravel est bien copié (DEBUG)
 RUN ls -l /var/www/html
 
-# Étape 8 : Installer les dépendances PHP
+# Étape 9 : Installer les dépendances PHP
 RUN composer install --no-progress --prefer-dist --optimize-autoloader
 
-# Étape 9 : Exposer le port
+# Étape 10 : Générer la clé Laravel
+RUN php artisan key:generate
+
+# Étape 11 : Exécuter les migrations et seeders
+RUN php artisan migrate --force && php artisan db:seed --force
+
+# Étape 12 : Exposer le port
 EXPOSE 9000
 
-# Étape 10 : Lancer PHP-FPM avec un message de débogage
+# Étape 13 : Lancer PHP-FPM avec un message de débogage
 CMD ["sh", "-c", "echo 'Démarrage de PHP-FPM...' && php-fpm"]

@@ -126,15 +126,6 @@ jobs:
       - name: 📜 Get logs of secret_santa container
         run: docker logs secret_santa
 
-      - name: 🔍 Check PHP-FPM status
-        run: docker exec secret_santa ps aux | grep php-fpm
-
-      - name: 🔑 Generate Laravel Key
-        run: docker exec secret_santa php artisan key:generate
-
-      - name: 📜 Run Laravel Migrations & Seeders
-        run: docker exec secret_santa php artisan migrate --seed --force --no-interaction
-
       - name: 📨 Test MailHog (Optional)
         run: curl -X GET http://localhost:8025/api/v2/messages | jq
 

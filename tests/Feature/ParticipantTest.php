@@ -22,9 +22,6 @@ class ParticipantTest extends BaseTestCase
             'room_id' => $room->id,
         ]);
 
-        dump($room, $response);
-
-
         $response->assertStatus(302);
         $this->assertDatabaseHas('participants', [
             'email' => 'charlie@example.com',

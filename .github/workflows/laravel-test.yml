@@ -31,12 +31,12 @@ jobs:
       - name: Generate application key
         run: php artisan key:generate
 
-      - name: Run migrations
+      - name: Run migrations and seed database
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"
-        run: php artisan migrate --force
-
+        run: php artisan migrate --seed --force
+        
       - name: Execute tests
         env:
           DB_CONNECTION: sqlite

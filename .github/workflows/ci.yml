@@ -97,7 +97,7 @@ jobs:
       - name: 🐳 Install Docker Compose
         run: |
           sudo apt-get update
-          sudo apt-get install -y docker-compose
+          sudo apt-get install -y docker-compose-plugin
 
       - name: 🏗️ Pull latest Docker images
         run: docker-compose pull
@@ -107,15 +107,18 @@ jobs:
 
       - name: 🚀 Wait for MySQL to be ready
         run: |
-          echo "Waiting for MySQL..."
-          until docker exec secret_santa_mysql mysql -uroot -proot -e "SHOW DATABASES;" > /dev/null 2>&1; do
-            echo "Waiting for database..."
+          echo "Waiting for MySQL to be ready..."
+          for i in {1..30}; do
+            docker exec secret_santa_mysql mysql -uroot -proot -e "SELECT 1;" && break
+            echo "MySQL is not ready yet, retrying in 2s..."
             sleep 2
           done
-          echo "MySQL is ready!"
+
+      - name: 🔄 Restart Laravel container to ensure it is ready
+        run: docker-compose restart secret_santa
 
       - name: 📦 Install Composer Dependencies in Docker
-        run: docker exec secret_santa composer install --no-progress --prefer-dist --optimize-autoloader
+        run: docker exec secret_santa composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
 
       - name: 📜 Run Laravel Migrations & Seeders
         run: docker exec secret_santa php artisan migrate --seed --force --no-interaction

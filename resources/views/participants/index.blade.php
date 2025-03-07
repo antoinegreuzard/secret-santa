@@ -6,14 +6,6 @@
 
     @include('participants.form')
 
-    <!-- Messages de succès / erreur -->
-    @if(session('success'))
-        <div class="bg-green-100 text-green-700 p-2 rounded-lg mb-4">{{ session('success') }}</div>
-    @endif
-    @if(session('error'))
-        <div class="bg-red-100 text-red-700 p-2 rounded-lg mb-4">{{ session('error') }}</div>
-    @endif
-
     <ul class="bg-gray-50 p-4 rounded-lg shadow">
         @foreach ($participants as $participant)
             @include('participants.item', ['participant' => $participant])

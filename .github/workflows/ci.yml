@@ -108,7 +108,7 @@ jobs:
       - name: 🚀 Wait for MySQL to be ready
         run: |
           echo "Waiting for MySQL..."
-          until docker exec laravel_mysql mysql -uroot -proot -e "SHOW DATABASES;" > /dev/null 2>&1; do
+          until docker exec secret_santa_mysql mysql -uroot -proot -e "SHOW DATABASES;" > /dev/null 2>&1; do
             echo "Waiting for database..."
             sleep 2
           done

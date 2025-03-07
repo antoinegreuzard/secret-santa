@@ -4,6 +4,9 @@ on:
   workflow_call:
 
 jobs:
+  install:
+    uses: ./.github/workflows/install.yml
+
   build:
     runs-on: ubuntu-latest
 

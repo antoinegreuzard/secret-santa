@@ -20,7 +20,7 @@ services:
         depends_on:
             secret_santa_mysql:
                 condition: service_healthy
-            mailhog:
+            secret_santa_mailhog:
                 condition: service_started
         networks:
             - secret_santa_network

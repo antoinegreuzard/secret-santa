@@ -1,19 +1,10 @@
 name: Run Tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_call:
 
 jobs:
-  build:
-    uses: ./.github/workflows/build.yml
-
   test:
-    needs: build
     runs-on: ubuntu-latest
 
     steps:

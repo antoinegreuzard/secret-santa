@@ -4,15 +4,20 @@ on:
   workflow_call:
 
 jobs:
-  install:
-    uses: ./.github/workflows/install.yml
-
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Checkout repository
         uses: actions/checkout@v4
+
+      - name: ⚡ Cache Node dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: 📦 Install Node dependencies & Build assets
         run: |

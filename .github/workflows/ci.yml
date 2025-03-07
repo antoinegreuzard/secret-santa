@@ -1,0 +1,25 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  install:
+    uses: ./.github/workflows/install.yml
+
+  build:
+    needs: install
+    uses: ./.github/workflows/build.yml
+
+  test:
+    needs: build
+    uses: ./.github/workflows/test.yml
+
+  deploy:
+    needs: test
+    uses: ./.github/workflows/deploy.yml

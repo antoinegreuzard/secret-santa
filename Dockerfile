@@ -25,15 +25,26 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 # Étape 5 : Définir le répertoire de travail
 WORKDIR /var/www/html
 
-# Étape 6 : Copier les fichiers du projet
+# Étape 6 : Copier tout le projet
 COPY . .
 
-# Étape 7 : Installer les dépendances PHP et Node.js
-RUN composer install --no-progress --prefer-dist --optimize-autoloader
-RUN npm install && npm run build
+# Étape 7 : Copier et configurer `.env`
+RUN cp .env.example .env
 
-# Étape 8 : Exposer le port
+# Étape 8 : Vérifier que Laravel est bien copié (DEBUG)
+RUN ls -l /var/www/html
+
+# Étape 9 : Installer les dépendances PHP
+RUN composer install --no-progress --prefer-dist --optimize-autoloader
+
+# Étape 10 : Générer la clé Laravel
+RUN php artisan key:generate
+
+# Étape 11 : Exécuter les migrations et seeders
+RUN php artisan migrate --force && php artisan db:seed --force
+
+# Étape 12 : Exposer le port
 EXPOSE 9000
 
-# Étape 9 : Lancer PHP-FPM au démarrage du conteneur
-CMD ["php-fpm"]
+# Étape 13 : Lancer PHP-FPM avec un message de débogage
+CMD ["sh", "-c", "echo 'Démarrage de PHP-FPM...' && php-fpm"]

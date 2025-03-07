@@ -1,36 +1,35 @@
-version: '3.8'
-
 services:
-    laravel_app:
+    secret_santa:
         build:
             context: .
             dockerfile: Dockerfile
-        container_name: laravel_app
+        container_name: secret_santa
         restart: unless-stopped
         working_dir: /var/www/html
         volumes:
             - .:/var/www/html
         ports:
-            - "8000:8000"
+            - "8005:8000"
         environment:
+            - DB_CONNECTION=mysql
             - APP_ENV=local
             - APP_DEBUG=true
-            - DB_HOST=laravel_mysql
+            - DB_HOST=secret_santa_mysql
             - DB_DATABASE=laravel
-            - DB_USERNAME=root
-            - DB_PASSWORD=root
+            - DB_USERNAME=laravel
+            - DB_PASSWORD=laravel
         depends_on:
-            laravel_mysql:
+            secret_santa_mysql:
                 condition: service_healthy
-            mailhog:
+            secret_santa_mailhog:
                 condition: service_started
         networks:
-            - laravel_network
-        command: php-fpm
+            - secret_santa_network
+        command: sh -c "composer install --no-progress --prefer-dist --optimize-autoloader && php artisan key:generate && php-fpm"
 
-    laravel_mysql:
+    secret_santa_mysql:
         image: mysql:8.0
-        container_name: laravel_mysql
+        container_name: secret_santa_mysql
         restart: unless-stopped
         environment:
             - MYSQL_ROOT_PASSWORD=root
@@ -38,43 +37,44 @@ services:
             - MYSQL_USER=laravel
             - MYSQL_PASSWORD=laravel
         ports:
-            - "3306:3306"
+            - "3307:3306"
         networks:
-            - laravel_network
+            - secret_santa_network
         healthcheck:
             test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-            interval: 10s
-            retries: 3
+            interval: 5s
+            retries: 2
         volumes:
             - mysql_data:/var/lib/mysql
 
-    phpmyadmin:
+    secret_santa_phpmyadmin:
         image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin
+        container_name: secret_santa_phpmyadmin
         restart: unless-stopped
         ports:
-            - "8080:80"
+            - "8098:80"
         environment:
-            - PMA_HOST=laravel_mysql
+            - PMA_HOST=mysql
             - MYSQL_ROOT_PASSWORD=root
         depends_on:
-            - laravel_mysql
+            - secret_santa_mysql
         networks:
-            - laravel_network
+            - secret_santa_network
 
-    mailhog:
+    secret_santa_mailhog:
         image: mailhog/mailhog
-        container_name: mailhog
+        container_name: secret_santa_mailhog
         restart: unless-stopped
         ports:
-            - "1025:1025" # SMTP
-            - "8025:8025" # Web UI
+            - "1026:1025"
+            - "8026:8025"
         networks:
-            - laravel_network
+            - secret_santa_network
 
-    xdebug:
-        image: php:8.2-fpm
-        container_name: xdebug
+    secret_santa_xdebug:
+        build:
+            context: .
+        container_name: secret_santa_xdebug
         restart: unless-stopped
         volumes:
             - .:/var/www/html
@@ -84,10 +84,10 @@ services:
         extra_hosts:
             - "host.docker.internal:host-gateway"
         networks:
-            - laravel_network
+            - secret_santa_network
 
 networks:
-    laravel_network:
+    secret_santa_network:
         driver: bridge
 
 volumes:

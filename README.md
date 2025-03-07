@@ -24,7 +24,7 @@ Santa de manière sécurisée et simple.
 
 1. **Cloner le projet**
    ```bash
-   git clone https://github.com/ton-repo/secret-santa.git
+   git clone https://github.com/antoinegreuzard/secret-santa.git
    cd secret-santa
    ```
 

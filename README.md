@@ -88,13 +88,6 @@ Le projet est entièrement automatisé avec **GitHub Actions** pour :
 - **Tests unitaires et fonctionnels** avec Laravel
 - **Déploiement en container Docker**
 
-### 📂 Structure des Workflows
-
-- `install.yml` : Installation des dépendances
-- `build.yml` : Compilation des assets
-- `test.yml` : Exécution des tests
-- `deploy.yml` : Déploiement de l'application avec Docker
-
 ---
 
 ## 📌 API Endpoints

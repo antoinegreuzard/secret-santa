@@ -105,8 +105,17 @@ jobs:
       - name: 🏗️ Build and Start Docker Containers
         run: docker-compose up -d --build
 
-      - name: 🚀 Wait for Laravel to be ready
-        run: sleep 120
+      - name: 🚀 Attendre que Laravel soit prêt
+        run: |
+          echo "Attente de Laravel..."
+          for i in {1..30}; do
+            if curl -s --head --request GET http://localhost/health | grep "200 OK" > /dev/null; then
+              echo "Laravel est prêt !"
+              break
+            fi
+            echo "En attente de Laravel..."
+            sleep 5
+          done
 
       - name: 🔍 Check running containers
         run: docker ps -a

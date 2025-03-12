@@ -9,7 +9,7 @@ services:
         volumes:
             - .:/var/www/html
         ports:
-            - "8005:8000"
+            - "8005:9000"
         environment:
             - DB_CONNECTION=mysql
             - APP_ENV=local
@@ -25,7 +25,15 @@ services:
                 condition: service_started
         networks:
             - secret_santa_network
-        command: sh -c "composer install --no-progress --prefer-dist --optimize-autoloader && php artisan key:generate && php-fpm"
+        command: >
+            sh -c "
+            git config --global --add safe.directory /var/www/html &&
+            composer install --no-progress --prefer-dist --optimize-autoloader &&
+            php artisan key:generate &&
+            php artisan migrate --force &&
+            php artisan db:seed --force &&
+            php-fpm
+            "
 
     secret_santa_mysql:
         image: mysql:8.0

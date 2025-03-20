@@ -9,7 +9,7 @@ Santa de manière sécurisée et simple.
 - **Ajout de participants** avec email
 - **Tirage au sort automatique**
 - **Envoi de notifications** aux participants
-- **Interface intuitive** et facile à utiliser
+- **Interface intuitive** et facile à utilisers
 
 ## 🛠️ Installation
 
